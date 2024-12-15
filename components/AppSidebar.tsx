@@ -43,7 +43,7 @@ const AppSidebar = () => {
             <CommandGroup heading='Settings'>
               <CommandItem>
                 <User className='mr-2 h-4 w-4' />
-                <span>Profile</span>
+                <Link href='/nodd'>Profile</Link>
                 <CommandShortcut>⌘P</CommandShortcut>
               </CommandItem>
               <CommandItem>

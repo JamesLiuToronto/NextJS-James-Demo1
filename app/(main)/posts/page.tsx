@@ -10,7 +10,7 @@ const PostsPage = async () => {
   return (
     <>
       <BackButton text='Go Back' link='/' />
-      <PostsTable posts={await fetchPosts()}/>
+      <PostsTable posts={await fetchPosts()} postUrl='/posts/edit'/>
       <PostsPagination />
     </>
   );

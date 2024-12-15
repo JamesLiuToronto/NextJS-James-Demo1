@@ -1,15 +1,16 @@
 'use client';
 import { useFormStatus } from 'react-dom';
+import { Button } from './ui/button';
 
 export default function SubmitButton() {
   const { pending, data, method, action } = useFormStatus();
 
   return (
-    <button
-      className="bg-blue-500 py-2 px-4 rounded-md w-full hover:bg-blue-700"
+    <Button variant="outline"
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-md w-full"
       type="submit"
     >
       {pending ? 'Submitting...' : 'Submit'}
-    </button>
+    </Button>
   );
 }

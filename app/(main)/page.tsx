@@ -31,7 +31,7 @@ export default async function Home() {
         />
       </div>
       <AnalyticsChart />
-      <PostsTable title='Latest Posts' limit={3} posts={(await PostServiceAxios.fetchPosts())}/>
+      <PostsTable title='Latest Posts' limit={3} posts={(await PostServiceAxios.fetchPosts())} postUrl='/posts/edit'/>
     </>
   );
 }

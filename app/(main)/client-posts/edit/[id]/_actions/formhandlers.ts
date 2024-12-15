@@ -5,7 +5,7 @@ import { DataFormState } from '@/types/data-types';
 import { convertZodErrors } from '@/utils/form';
 import { revalidatePath } from 'next/cache';
 import { Post, postSchema } from '@/app/(main)/share-types/post-schema';
-import { updatePost } from '../../../components/PostActions';
+import { updatePost } from '@/components/PostActions';
 
 export const formHandlerAction = async (
   formData: Post

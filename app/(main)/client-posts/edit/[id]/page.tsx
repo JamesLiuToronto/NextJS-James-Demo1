@@ -10,9 +10,10 @@ import { formHandlerAction } from './_actions/formhandlers';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import SubmitButton from '@/components/SubmitButton';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { Post, postSchema } from '@/app/(main)/share-types/post-schema';
-import { fetchPost } from '../../components/PostActions';
+import { fetchPost } from '@/components/PostActions';
+import { Label } from '@/components/ui/label';
 
 
 
@@ -112,7 +113,7 @@ const PostEditPage = ({ params }: PostEditPageProps) => {
     <>
       <BackButton text='Back to Posts' link='/client-posts' />
       
-      <h3 className='text-2xl mb-4'>Edit Post</h3>
+      <Label htmlFor="terms" className='text-2xl mb-4'>Edit Post</Label>
       
       <Form {...form}>
 

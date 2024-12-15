@@ -4,18 +4,18 @@
       "id": "1",
       "title": "The Rise of Artificial Intelligence",
       "body": "Artificial Intelligence (AI) is revolutionizing various industries...",
-      "author": "John Doe",
+      "author": "John Does",
       "date": "2024-05-01",
       "comments": [
         {
           "id": "1",
-          "text": "Great introduction!",
-          "username": "Jane"
+          "username": "Jane",
+          "text": "Great introduction!"
         },
         {
           "id": "2",
-          "text": "Looking forward to more posts on this topic.",
-          "username": "Alex"
+          "username": "Alex",
+          "text": "Looking forward to more posts on this topic."
         }
       ]
     },
@@ -42,7 +42,7 @@
       "id": "3",
       "title": "Blockchain: Transforming Industries",
       "body": "Blockchain technology is disrupting traditional industries...",
-      "author": "David Johnson ddd",
+      "author": "David Johnson ddda",
       "date": "2024-05-03",
       "comments": [
         {
@@ -194,7 +194,7 @@
       "id": "11",
       "title": "The Rise of Artificial Intelligence",
       "body": "Artificial Intelligence (AI) is revolutionizing various industries...",
-      "author": "John Doe ddd",
+      "author": "John Doe dddd",
       "date": "2024-05-01",
       "comments": []
     },

@@ -14,6 +14,7 @@ import SubmitButton from '@/components/SubmitButton';
 import { fetchPost } from '@/components/PostActions';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { Label } from '@/components/ui/label';
 
 
 
@@ -99,13 +100,17 @@ const PostEditPage = ({ params }: PostEditPageProps) => {
     <>
       <BackButton text='Back to Posts' link='/posts' />
       
-      <h3 className='text-2xl mb-4'>Edit Post</h3>
-      
+      <Label htmlFor="terms" className='text-2xl mb-4'>Edit Post</Label>
+
+            
       <Form {...form}>
 
       <form onSubmit={form.handleSubmit(handleFormSubmit)} ref={formRef} className='space-y-8'>
+      <hr className='my-4 border-t-2 border-gray-300' />
+
         <Input type="hidden" {...form.register('id')} />
         <Input type="hidden" {...form.register('comments')} />
+
         <FormField
           control={form.control}
           name='title'
@@ -166,6 +171,9 @@ const PostEditPage = ({ params }: PostEditPageProps) => {
             </FormItem>
           )}
         />
+
+        <hr className='my-4 border-t-2 border-gray-300' />  
+
         <SubmitButton/>
       </form>
     </Form>

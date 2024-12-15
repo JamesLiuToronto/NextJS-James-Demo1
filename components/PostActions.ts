@@ -14,8 +14,8 @@ const apiClient = axios.create({
 
 export async function fetchPosts(): Promise<Post[]> {
   //delay for 2 seconds
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  console.log('delay 2 seconds');
+  //await new Promise((resolve) => setTimeout(resolve, 2000));
+  //console.log('delay 2 seconds');
   const response = await apiClient.get<Post[]>(postUrl);
   return response.data;
 }

@@ -2,8 +2,8 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { createPost, deletePost, fetchPost, fetchPosts, updatePost } from './PostActions';
 import { Post } from '../../share-types/post-schema';
+import { createPost, deletePost, fetchPost, fetchPosts, updatePost } from '@/components/PostActions';
 
 export function usePosts() {
   const queryClient = useQueryClient();

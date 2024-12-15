@@ -3,14 +3,15 @@
 import BackButton from '@/components/BackButton';
 import PostsPagination from '@/components/PostsPagination';
 import { usePosts } from './components/usePosts';
-import PostsTable from './components/PostsTable';
+import PostsTable from '@/components/PostsTable';
 
 
 const PostsPage = () => {
   const { posts, error, isLoading } = usePosts();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    console.log('loading triggered');
+    return <div>Loading... wait</div>;
   }
 
   if (error) {
@@ -20,7 +21,7 @@ const PostsPage = () => {
   return (
     <>
       <BackButton text='Go Back' link='/' />
-      <PostsTable posts={posts}/>
+      <PostsTable posts={posts} postUrl='/client-posts/edit'/>
       <PostsPagination />
     </>
   );
