@@ -1,25 +1,6 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "The Rise of Artificial Intelligence",
-      "body": "Artificial Intelligence (AI) is revolutionizing various industries...",
-      "author": "John Does",
-      "date": "2024-05-01",
-      "comments": [
-        {
-          "id": "1",
-          "username": "Jane",
-          "text": "Great introduction!"
-        },
-        {
-          "id": "2",
-          "username": "Alex",
-          "text": "Looking forward to more posts on this topic."
-        }
-      ]
-    },
-    {
       "id": "2",
       "title": "Quantum Computing: A New Era of Computing",
       "body": "Quantum computing holds the potential to solve problems...",
@@ -35,25 +16,6 @@
           "id": "2",
           "username": "Sarah",
           "text": "I have some questions about quantum algorithms."
-        }
-      ]
-    },
-    {
-      "id": "3",
-      "title": "Blockchain: Transforming Industries",
-      "body": "Blockchain technology is disrupting traditional industries...",
-      "author": "David Johnson ddda",
-      "date": "2024-05-03",
-      "comments": [
-        {
-          "id": "1",
-          "username": "Lucy",
-          "text": "Blockchain has immense potential!"
-        },
-        {
-          "id": "2",
-          "username": "Michael",
-          "text": "I am curious about its scalability."
         }
       ]
     },
@@ -189,30 +151,6 @@
           "username": "Daniel"
         }
       ]
-    },
-    {
-      "id": "11",
-      "title": "The Rise of Artificial Intelligence",
-      "body": "Artificial Intelligence (AI) is revolutionizing various industries...",
-      "author": "John Doe dddd",
-      "date": "2024-05-01",
-      "comments": []
-    },
-    {
-      "id": "12",
-      "title": "Quantum Computing: A New Era of Computing",
-      "body": "Quantum computing holds the potential to solve problems...",
-      "author": "Emily Smith ddd",
-      "date": "2024-04-28",
-      "comments": []
-    },
-    {
-      "id": "13",
-      "title": "Blockchain: Transforming Industries",
-      "body": "Blockchain technology is disrupting traditional industries...",
-      "author": "David Johnson Dq",
-      "date": "2024-05-03",
-      "comments": []
     }
   ]
 }
