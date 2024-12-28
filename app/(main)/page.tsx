@@ -3,7 +3,7 @@ import DashboardCard from '@/components/dashboard/DashboardCard';
 import PostsTable from '@/components/PostsTable';
 import AnalyticsChart from '@/components/AnalyticsChart';
 import { Folder, MessageCircle, Newspaper, User } from 'lucide-react';
-import PostServiceAxios from '../../components/PostServiceAxios';
+import { fetchPosts } from '@/components/PostActions';
 
 export default async function Home() {
   return (
@@ -31,7 +31,7 @@ export default async function Home() {
         />
       </div>
       <AnalyticsChart />
-      <PostsTable title='Latest Posts' limit={3} posts={(await PostServiceAxios.fetchPosts())} postUrl='/posts/edit'/>
+      <PostsTable title='Latest Posts' limit={3} posts={(await fetchPosts())} baseUrl='/posts/edit'/>
     </>
   );
 }

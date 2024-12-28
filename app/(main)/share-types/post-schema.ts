@@ -16,12 +16,9 @@ export const postSchema = z.object({
    .min(5, 'Author min is 5 characters')
    .max(20, 'Author max is 20 characters'),  
    date: z
-    .string({ message: 'Date is required' })
+    .date({ message: 'Date is required' }),
    // .url('Author must be a valid URL'),
-   .min(10, 'Author min is 10 characters, yyyy-mm-dd')
-   .max(10, 'Author max is 10 characters, , yyyy-mm-dd')
-   ,   
-   
+      
   comments: z.array(z.object({
       id: z.string({ message: 'ID is required' }).min(1, 'ID is required, min 1 character'),  
       username: z.string({ message: 'username is required' }).min(1, 'username min is 1 character'),
@@ -30,6 +27,7 @@ export const postSchema = z.object({
 });
 
 export type Post = z.infer<typeof postSchema>;
+
 
   
  

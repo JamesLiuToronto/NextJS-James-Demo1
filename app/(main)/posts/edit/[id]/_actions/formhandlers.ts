@@ -1,17 +1,21 @@
 'use server';
 
 import { DataFormState } from '@/types/data-types';
-import { Post, postSchema } from '../../../../share-types/post-schema'; // Adjust the import path as necessary
+
 import { convertZodErrors } from '@/utils/form';
-import PostServiceAxios from '@/components/PostServiceAxios';
 import { revalidatePath } from 'next/cache';
+import { createPost, updatePost } from '@/components/PostActions';
+import { Post, postSchema } from '@/app/(main)/share-types/post-schema';
 
 export const formHandlerAction = async (
-  formData: Post
+  formData: Post,
+  isUpdate: boolean
 ): Promise<DataFormState | undefined> => {
 
+  console.log('validated date:', formData.date);
+
   const validated = postSchema.safeParse(formData);
-  console.log('validated:', validated);
+  
   if (!validated.success) {
     
     const errors = convertZodErrors(validated.error);
@@ -20,10 +24,9 @@ export const formHandlerAction = async (
       errors,
     };
   } 
-
-  console.log('Data is valid:', validated.data);
+  
   try {
-    const response = await PostServiceAxios.updatePost(formData);
+    const response = isUpdate? await updatePost(formData): await createPost(formData);
     revalidatePath('/posts');
     return { successMsg: 'Post added successfully!', data: response };
   } catch (error) {
@@ -31,5 +34,7 @@ export const formHandlerAction = async (
     return { errors: { form: 'Failed to update post' } };
   }
 };
+
+
 
 
