@@ -20,6 +20,7 @@ import {
 import Link from 'next/link';
 
 const AppSidebar = () => {
+  
     return (
         <Command className='rounded-none bg-secondary'>
           <CommandInput placeholder='Type a command or search...' />
@@ -38,6 +39,15 @@ const AppSidebar = () => {
                 <Folders className='mr-2 h-4 w-4' />
                 <Link href='/client-posts'>Posts using client</Link>
               </CommandItem>
+              <CommandItem>
+                <Folders className='mr-2 h-4 w-4' />
+                <Link href='/posts-data'>Posts using pagination</Link>
+              </CommandItem>
+              <CommandItem>
+                <Folders className='mr-2 h-4 w-4' />
+                <Link href='/server-data'>server side pagination</Link>
+              </CommandItem>
+            
             </CommandGroup>
             <CommandSeparator />
             <CommandGroup heading='Settings'>
