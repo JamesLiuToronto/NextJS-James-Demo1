@@ -3,6 +3,8 @@ import path from "path"
 import { Metadata } from "next"
 import Image from "next/image"
 import { z } from "zod"
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
@@ -36,7 +38,9 @@ export default async function TaskPage() {
               Here&apos;s a list of your tasks for this month!
             </p>
           </div>
-         
+          <Link href="/posts-data/edit/0">
+            <Button>New Task</Button>
+          </Link>
         </div>
         <DataTable data={tasks} columns={columns} />
       </div>

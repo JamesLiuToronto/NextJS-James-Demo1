@@ -1,8 +1,7 @@
 "use client"
 
-import { Row } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
-import { useRouter } from 'next/navigation'
+import { Row } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -20,8 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { labels } from "../data/data"
-import { taskSchema } from "../data/schema"
-import { deleteTaskAction } from './task-actions'
+import { Task } from "../data/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -30,8 +28,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const router = useRouter()
-  const task = taskSchema.parse(row.original)
+  const task = row.original as Task
 
   return (
     <DropdownMenu>
@@ -40,12 +37,12 @@ export function DataTableRowActions<TData>({
           variant="ghost"
           className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
         >
-          <MoreHorizontal />
+          <MoreHorizontal className="h-4 w-4" />
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem onClick={() => router.push(`/posts-data/edit/${task.id}`)}>Edit</DropdownMenuItem>
+        <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -62,20 +59,11 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={async () => {
-            const details = `ID: ${task.id}\nTitle: ${task.title}\nStatus: ${task.status}\nLabel: ${task.label}\nPriority: ${task.priority}`
-            const confirmed = window.confirm(`Are you sure you want to delete this task?\n\n${details}`)
-            if (confirmed) {
-              await deleteTaskAction(task.id)
-              router.refresh()
-            }
-          }}
-        >
+        <DropdownMenuItem>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+} 

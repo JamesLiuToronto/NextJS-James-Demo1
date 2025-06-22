@@ -21,6 +21,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Cookies from 'js-cookie'
+import type { LoginUser } from '@/types/user'
 
 const formSchema = z.object({
   email: z
@@ -38,6 +41,7 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const router = useRouter();
+  const [error, setError] = useState('');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,8 +51,25 @@ const LoginForm = () => {
     },
   });
 
-  const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    router.push('/'); // Navigate to the new post page
+  const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+    setError('')
+    try {
+      const response = await fetch('http://localhost:3001/users')
+      if (!response.ok) {
+        setError('Login service unavailable')
+        return
+      }
+      const users: LoginUser[] = await response.json()
+      const user = users.find((u) => u.email === data.email && u.password === data.password)
+      if (user) {
+        Cookies.set('isLoggedIn', 'true')
+        router.push('/')
+      } else {
+        setError('Invalid email or password')
+      }
+    } catch {
+      setError('Invalid email or password')
+    }
   };
 
   return (
@@ -60,6 +81,9 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className='space-y-2'>
+        {error && (
+          <div className='text-red-500 text-sm mb-2'>{error}</div>
+        )}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}

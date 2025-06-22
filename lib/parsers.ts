@@ -6,6 +6,14 @@ export const sortingItemSchema = z.object({
   desc: z.boolean(),
 });
 
+export const filterSchema = z.object({
+  rowId: z.string(),
+  id: z.string(),
+  operator: z.string(),
+  value: z.union([z.string(), z.number(), z.boolean(), z.array(z.string())]),
+  type: z.enum(["text", "number", "date", "boolean", "select", "multi-select"]),
+});
+
 /**
  * Creates a parser for TanStack Table sorting state.
  * @param originalRow The original row data to validate sorting keys against.

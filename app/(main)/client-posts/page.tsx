@@ -21,7 +21,7 @@ const PostsPage = () => {
   return (
     <>
       <BackButton text='Go Back' link='/' />
-      <PostsTable posts={posts} postUrl='/client-posts/edit'/>
+      <PostsTable title='Client Post' posts={posts} baseUrl='/client-posts/edit'/>
       <PostsPagination />
     </>
   );

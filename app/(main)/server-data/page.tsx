@@ -1,65 +1,135 @@
-import * as React from "react"
-import { type SearchParams } from "@/types"
+"use client"
 
-import { getValidFilters } from "@/lib/data-table"
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { DateRangePicker } from "@/components/date-range-picker"
-import { Shell } from "@/components/shell"
 
-import { FeatureFlagsProvider } from "./_components/feature-flags-provider"
-import { TasksTable } from "./_components/tasks-table"
-import {
-  getTaskPriorityCounts,
-  getTasks,
-  getTaskStatusCounts,
-} from "./_lib/queries"
-import { searchParamsCache } from "./_lib/validations"
+import { columns } from "./components/columns"
+import { DataTable } from "./components/data-table"
+import { Task, ApiRequest, ApiResponse } from "./data/schema"
+import { mockTaskApiService } from "./lib/api-service"
 
-interface IndexPageProps {
-  searchParams: Promise<SearchParams>
-}
+export default function ServerDataPage() {
+  const searchParams = useSearchParams()
+  const [data, setData] = useState<Task[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalCount: 0,
+    pageSize: 10,
+  })
 
-export default async function IndexPage(props: IndexPageProps) {
-  const searchParams = await props.searchParams
-  const search = searchParamsCache.parse(searchParams)
+  // Parse search params to create API request
+  const parseSearchParams = (): ApiRequest => {
+    const page = parseInt(searchParams.get('page') || '1')
+    const pageSize = parseInt(searchParams.get('pageSize') || '10')
+    const sortBy = (searchParams.get('sortBy') as 'id' | 'title' | 'status' | 'priority' | 'label') || 'id'
+    const sortOrder = (searchParams.get('sortOrder') as 'asc' | 'desc') || 'asc'
+    const search = searchParams.get('search') || undefined
+    const status = searchParams.getAll('status').length > 0 ? searchParams.getAll('status') : undefined
+    const priority = searchParams.getAll('priority').length > 0 ? searchParams.getAll('priority') : undefined
+    const label = searchParams.getAll('label').length > 0 ? searchParams.getAll('label') : undefined
 
-  const validFilters = getValidFilters(search.filters)
+    return {
+      page,
+      pageSize,
+      sortBy,
+      sortOrder,
+      search,
+      status,
+      priority,
+      label,
+    }
+  }
 
-  const promises = Promise.all([
-    getTasks({
-      ...search,
-      filters: validFilters,
-    }),
-    getTaskStatusCounts(),
-    getTaskPriorityCounts(),
-  ])
+  // Fetch data from API
+  const fetchData = async (params: ApiRequest) => {
+    try {
+      setLoading(true)
+      setError(null)
+      
+      // Use mock service for now - replace with real API service when available
+      const response: ApiResponse = await mockTaskApiService.fetchTasks(params)
+      
+      setData(response.data)
+      setPagination({
+        currentPage: response.pagination.currentPage,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+        pageSize: response.pagination.pageSize,
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
+      console.error('Error fetching data:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Fetch data when search params change
+  useEffect(() => {
+    const params = parseSearchParams()
+    fetchData(params)
+  }, [searchParams])
+
+  if (error) {
+    return (
+      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <div className="flex items-center justify-between space-y-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Error</h2>
+            <p className="text-muted-foreground">
+              {error}
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <Shell className="gap-2">
-      <FeatureFlagsProvider>
-        <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
-          <DateRangePicker
-            triggerSize="sm"
-            triggerClassName="ml-auto w-56 sm:w-60"
-            align="end"
-            shallow={false}
-          />
-        </React.Suspense>
-        <React.Suspense
-          fallback={
-            <DataTableSkeleton
-              columnCount={6}
-              searchableColumnCount={1}
-              filterableColumnCount={2}
-              cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem", "8rem"]}
-              shrinkZero
-            />
-          }
-        >
-          <TasksTable promises={promises} />
-        </React.Suspense>
-      </FeatureFlagsProvider>
-    </Shell>
+    <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="flex items-center justify-between space-y-2">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Server Data Tasks</h2>
+          <p className="text-muted-foreground">
+            Here&apos;s a list of your tasks with server-side filtering and pagination!
+          </p>
+        </div>
+        <Link href="/server-data/edit/0">
+          <Button>New Task</Button>
+        </Link>
+      </div>
+      
+      {loading ? (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-8 w-[250px]" />
+            <Skeleton className="h-8 w-[100px]" />
+          </div>
+          <div className="rounded-md border">
+            <div className="p-4">
+              <Skeleton className="h-4 w-full mb-4" />
+              <Skeleton className="h-4 w-full mb-4" />
+              <Skeleton className="h-4 w-full mb-4" />
+              <Skeleton className="h-4 w-3/4" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <DataTable 
+          data={data} 
+          columns={columns}
+          totalPages={pagination.totalPages}
+          totalCount={pagination.totalCount}
+          currentPage={pagination.currentPage}
+          pageSize={pagination.pageSize}
+        />
+      )}
+    </div>
   )
 }

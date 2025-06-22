@@ -1,4 +1,4 @@
-import type { ColumnSort, Row } from "@tanstack/react-table"
+import type { ColumnSort, Row, Table } from "@tanstack/react-table"
 import { type z } from "zod"
 
 import { type filterSchema } from "@/lib/parsers"
@@ -62,3 +62,11 @@ export interface QueryBuilderOpts {
   distinct?: boolean
   nullish?: boolean
 }
+
+export interface DataTableSortListProps<TData> {
+  table: Table<TData>
+  debounceMs: number
+  shallow?: boolean
+}
+
+export type SortDirection = "asc" | "desc"

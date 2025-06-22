@@ -60,7 +60,6 @@ export function usePosts() {
 
 // Hook for fetching a single post
 export function usePost(id: string) {
-  const queryClient = useQueryClient();
   const postId = Number(id); // Convert string to number
   const postQuery = useQuery({
     queryKey: ["post", postId],
