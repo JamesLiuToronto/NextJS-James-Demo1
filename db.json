@@ -7,24 +7,16 @@
       "password": "123456"
     },
     {
-      "id": "559f",
-      "email": "jamesliucontact@gmail.com",
-      "password": "123456"
-    },
-    {
       "id": "3b27",
+      "name": "Ocean Peak Liu",
       "email": "oceanpeakliu@gmail.com",
       "password": "dfgdfsg"
     },
     {
       "id": "4133",
+      "name": "James Liu 8",
       "email": "jamesliu_8@yahoo.com",
       "password": "123456"
-    },
-    {
-      "id": "5316",
-      "email": "osfdsafdsafceanpeakliu@gmail.com",
-      "password": "asdfdsaf"
     }
   ],
   "posts": [
